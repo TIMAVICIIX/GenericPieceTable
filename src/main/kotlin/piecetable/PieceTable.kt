@@ -54,6 +54,26 @@ class PieceTable<T>(
         }
     }
 
+    fun modify(index: Int,  record: Boolean = true,transform: (T) -> T) {
+        val total = root?.subtreeChars ?: 0
+        if (index < 0 || index >= total) return
+
+        val oldValue = collect()[index]
+        val newValue = transform(oldValue)
+
+        if (oldValue == newValue) return // 无变化，不记录
+
+        delete(index, 1, record = false)
+        insert(index, listOf(newValue), record = false)
+
+        if (record) {
+            undoStack.addLast(com.timvx.piecetable.event.ModifyEvent(index, oldValue, newValue))
+            redoStack.clear()
+        }
+    }
+
+
+
     fun insert(posInput: Int, obj: T, record: Boolean = true) {
         insert(posInput, listOf(obj), record)
     }

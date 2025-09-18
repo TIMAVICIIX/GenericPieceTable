@@ -50,6 +50,12 @@ fun objectTest() {
     ut.undo()
     ul.add(1,User("Jack"))
     showResult("Undo")
+
+    ut.modify(1){ obj->
+        obj.copy(name = "Card")
+    }
+    ul[1] = ul[1].copy(name = "Card")
+    showResult("Modify")
 }
 
 fun strTest() {

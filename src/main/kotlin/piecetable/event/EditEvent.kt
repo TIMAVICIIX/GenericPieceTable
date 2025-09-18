@@ -16,7 +16,7 @@ sealed class EditEvent<T> {
     abstract fun redo(table: PieceTable<T>)
 }
 
-class InsertEvent<T>(val pos: Int, val input: List<T>) : EditEvent<T>() {
+class InsertEvent<T>(private val pos: Int, private val input: List<T>) : EditEvent<T>() {
     override fun undo(table: PieceTable<T>) {
         table.delete(pos, input.size, record = false)
     }
@@ -24,9 +24,25 @@ class InsertEvent<T>(val pos: Int, val input: List<T>) : EditEvent<T>() {
     override fun redo(table: PieceTable<T>) = table.insert(pos, input, record = false)
 }
 
-class DeleteEvent<T>(val pos: Int, val input: List<T>) : EditEvent<T>() {
+class DeleteEvent<T>(private val pos: Int, private val input: List<T>) : EditEvent<T>() {
     override fun undo(table: PieceTable<T>) = table.insert(pos, input, record = false)
     override fun redo(table: PieceTable<T>) {
         table.delete(pos, input.size, record = false)
+    }
+}
+
+class ModifyEvent<T>(
+    private val pos: Int,
+    private val oldValue: T,
+    private val newValue: T
+) : EditEvent<T>() {
+    override fun undo(table: PieceTable<T>) {
+        table.delete(pos, 1, record = false)
+        table.insert(pos, listOf(oldValue), record = false)
+    }
+
+    override fun redo(table: PieceTable<T>) {
+        table.delete(pos, 1, record = false)
+        table.insert(pos, listOf(newValue), record = false)
     }
 }
