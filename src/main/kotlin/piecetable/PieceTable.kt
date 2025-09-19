@@ -22,7 +22,8 @@ import kotlin.random.Random
  * 包含 undo/redo，且在每次 edit 后做相邻片段合并（避免 piece 泡沫）。
  */
 class PieceTable<T>(
-    original: List<T> = emptyList()
+    original: List<T> = emptyList(),
+    private val maxHistory: Int = 100 // 限制 undo/redo 栈的最大长度
 ) {
     private val originalBuffer: ListBuffer<T> = ListBuffer(original)
     private val addBuffer: MutableList<T> = mutableListOf()
@@ -40,6 +41,21 @@ class PieceTable<T>(
         }
     }
 
+    /** 封装 push 方法，带栈长度限制 */
+    private fun pushUndo(ev: EditEvent<T>) {
+        undoStack.addLast(ev)
+        if (undoStack.size > maxHistory) {
+            undoStack.removeFirst()
+        }
+    }
+
+    private fun pushRedo(ev: EditEvent<T>) {
+        redoStack.addLast(ev)
+        if (redoStack.size > maxHistory) {
+            redoStack.removeFirst()
+        }
+    }
+
     // Treap 节点
     private class TreapNode<T>(
         val piece: Piece<T>,
@@ -54,7 +70,7 @@ class PieceTable<T>(
         }
     }
 
-    fun modify(index: Int,  record: Boolean = true,transform: (T) -> T) {
+    fun modify(index: Int, record: Boolean = true, transform: (T) -> T) {
         val total = root?.subtreeChars ?: 0
         if (index < 0 || index >= total) return
 
@@ -71,7 +87,6 @@ class PieceTable<T>(
             redoStack.clear()
         }
     }
-
 
 
     fun insert(posInput: Int, obj: T, record: Boolean = true) {
@@ -147,13 +162,13 @@ class PieceTable<T>(
     fun undo() {
         val ev = undoStack.removeLastOrNull() ?: return
         ev.undo(this)
-        redoStack.addLast(ev)
+        pushRedo(ev)
     }
 
     fun redo() {
         val ev = redoStack.removeLastOrNull() ?: return
         ev.redo(this)
-        undoStack.addLast(ev)
+        pushUndo(ev)
     }
 
     /***************** Treap merge / split / rebuild *****************/
