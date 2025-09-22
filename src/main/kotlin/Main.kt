@@ -1,7 +1,7 @@
-package com.timvx
+package com.ebmlibs
 
-import com.timvx.piecetable.PieceTable
-import com.timvx.piecetable.test.User
+import com.ebmlibs.piecetable.PieceTable
+import com.ebmlibs.piecetable.test.User
 
 // TEST ENTRY
 fun main() {

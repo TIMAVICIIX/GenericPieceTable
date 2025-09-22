@@ -7,6 +7,6 @@
  *@Version: 1.0
  */
 
-package com.timvx.piecetable.struct
+package com.ebmlibs.piecetable.struct
 
 enum class BufferKind { ORIGINAL, ADD }

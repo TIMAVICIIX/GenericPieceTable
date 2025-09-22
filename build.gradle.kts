@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.ebmlibs"
-version = "1.1.0"
+version = "1.2.0"
 base {
     archivesName = rootProject.name
 }

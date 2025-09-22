@@ -7,7 +7,7 @@
  *@Version: 1.0
  */
 
-package com.timvx.piecetable.test
+package com.ebmlibs.piecetable.test
 
 data class User(
     val name:String

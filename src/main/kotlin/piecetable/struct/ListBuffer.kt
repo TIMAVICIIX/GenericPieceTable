@@ -7,7 +7,7 @@
  *@Version: 1.0
  */
 
-package com.timvx.piecetable.struct
+package com.ebmlibs.piecetable.struct
 
 class ListBuffer<T>(private val list: List<T>) {
     val size: Int get() = list.size

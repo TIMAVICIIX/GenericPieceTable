@@ -7,14 +7,14 @@
  *@Version: 1.0
  */
 
-package com.timvx.piecetable
+package com.ebmlibs.piecetable
 
-import com.timvx.piecetable.event.DeleteEvent
-import com.timvx.piecetable.event.EditEvent
-import com.timvx.piecetable.event.InsertEvent
-import com.timvx.piecetable.struct.BufferKind
-import com.timvx.piecetable.struct.ListBuffer
-import com.timvx.piecetable.struct.Piece
+import com.ebmlibs.piecetable.event.DeleteEvent
+import com.ebmlibs.piecetable.event.EditEvent
+import com.ebmlibs.piecetable.event.InsertEvent
+import com.ebmlibs.piecetable.struct.BufferKind
+import com.ebmlibs.piecetable.struct.ListBuffer
+import com.ebmlibs.piecetable.struct.Piece
 import kotlin.random.Random
 
 /**
@@ -83,7 +83,7 @@ class PieceTable<T>(
         insert(index, listOf(newValue), record = false)
 
         if (record) {
-            undoStack.addLast(com.timvx.piecetable.event.ModifyEvent(index, oldValue, newValue))
+            undoStack.addLast(com.ebmlibs.piecetable.event.ModifyEvent(index, oldValue, newValue))
             redoStack.clear()
         }
     }

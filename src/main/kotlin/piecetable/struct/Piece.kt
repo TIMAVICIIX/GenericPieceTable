@@ -7,7 +7,7 @@
  *@Version: 1.0
  */
 
-package com.timvx.piecetable.struct
+package com.ebmlibs.piecetable.struct
 
 data class Piece<T>(
     val buffer: BufferKind,

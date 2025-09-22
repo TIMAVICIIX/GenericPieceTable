@@ -7,9 +7,9 @@
  *@Version: 1.0
  */
 
-package com.timvx.piecetable.event
+package com.ebmlibs.piecetable.event
 
-import com.timvx.piecetable.PieceTable
+import com.ebmlibs.piecetable.PieceTable
 
 sealed class EditEvent<T> {
     abstract fun undo(table: PieceTable<T>)
