@@ -75,6 +75,12 @@ publishing {
             }
         }
     }
+    repositories {
+        maven {
+            // 使用 buildDirectory.dir 返回的 Provider
+            url = layout.buildDirectory.dir("staging-deploy").get().asFile.toURI()
+        }
+    }
 }
 repositories {
     mavenLocal()
